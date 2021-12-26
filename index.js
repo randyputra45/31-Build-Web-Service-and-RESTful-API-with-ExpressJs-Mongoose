@@ -2,16 +2,14 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const express = require("express");
+const coursesRoutes = require("./routes/courses.route");
+const instructorsRoutes = require("./routes/instructors.route");
+const participantsRoutes = require("./routes/participants.route")
 
-const routes = require("./routes/index");
 const db = require("./helpers/db");
 
 const port = process.env.PORT || 3000;
 const uri = process.env.MONGO_URI;
-// const dbOptions = {
-//     user: process.env.MONGO_USER,
-//     password: process.env.MONGO_PASSWORD,
-// };
 
 async function main() {
   try {
@@ -21,7 +19,9 @@ async function main() {
     const app = express();
 
     app.use(express.json()); // agar kita bisa ambil reques body json
-    app.use(routes);
+    app.use(coursesRoutes);
+    app.use(instructorsRoutes);
+    app.use(participantsRoutes);
 
     app.listen(port, () => {
       console.log("Server is running on port", port);
